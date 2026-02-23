@@ -7,6 +7,7 @@ import { ValidationError } from './errors';
 import { memoizedGetter } from './helpers-internal/memoize';
 import type { IStringProducer } from './lazy';
 import { Lazy } from './lazy';
+import { Mixins } from './mixins';
 import { generatePhysicalName, isGeneratedWhenNeededMarker } from './private/physical-name-generator';
 import { Reference } from './reference';
 import type { RemovalPolicy } from './removal-policy';
@@ -17,7 +18,7 @@ import type { IEnvironmentAware, ResourceEnvironment } from '../../interfaces/en
 
 // v2 - leave this as a separate section so it reduces merge conflicts when compat is removed
 // eslint-disable-next-line import/order
-import type { IConstruct } from 'constructs';
+import type { IConstruct, IMixin } from 'constructs';
 
 /**
  * Interface for L2 Resource constructs.
@@ -169,6 +170,12 @@ export abstract class Resource extends Construct implements IResource {
       account: this._customAccount ?? this.stack.account,
       region: this._customRegion ?? this.stack.region,
     };
+  }
+
+  public with(...mixins: IMixin[]): IConstruct {
+    // override with Mixins.of() implementation for analytics tracking
+    Mixins.of(this).apply(...mixins);
+    return this;
   }
 
   /**

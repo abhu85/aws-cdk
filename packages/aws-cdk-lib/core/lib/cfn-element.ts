@@ -78,6 +78,12 @@ export abstract class CfnElement extends Construct {
     }
   }
 
+  public with(...mixins: IMixin[]): IConstruct {
+    // override with Mixins.of() implementation for analytics tracking
+    Mixins.of(this).apply(...mixins);
+    return this;
+  }
+
   /**
    * Overrides the auto-generated logical ID with a specific ID.
    * @param newLogicalId The new logical ID to use for this stack element.
@@ -207,4 +213,6 @@ function notTooLong(x: string) {
 import { CfnReference } from './private/cfn-reference';
 import { Stack } from './stack';
 import { Token } from './token';import { ValidationError } from './errors';
+import { Mixins } from './mixins';
+import type { IConstruct, IMixin } from 'constructs';
 

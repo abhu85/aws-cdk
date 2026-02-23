@@ -5,7 +5,7 @@ import * as s3 from 'aws-cdk-lib/aws-s3';
 import { Construct, type IConstruct } from 'constructs';
 import type { IDeliveryStreamRef } from 'aws-cdk-lib/aws-kinesisfirehose';
 import { tryFindBucketPolicyForBucket, tryFindDeliverySourceForResource, tryFindKmsKeyConstruct, tryFindKmsKeyforBucket } from '../../mixins/private/reflections';
-import { ConstructSelector, Mixins } from '../../core';
+import { ConstructSelector, Mixins } from 'aws-cdk-lib/core';
 import * as xray from '../aws-xray/policy';
 import { BucketPolicyStatementsMixin } from '../aws-s3/bucket-policy';
 import type { CfnKey, IKeyRef } from 'aws-cdk-lib/aws-kms';
